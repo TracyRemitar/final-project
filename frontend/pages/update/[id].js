@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
 
-const UpdateDataForm = ({ itemId }) => {
-    const [formData, setFormData] = useState({
-        // Initialize form data fields with existing data
-    });
-
-    const handleChange = (e) => {
-        // Handle form field changes
-    };
+const UpdateDataPage = ({ item }) => {
+    const [name, setName] = useState(item.name);
+    const [quantity, setQuantity] = useState(item.quantity);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Code to submit updated data to the backend and update the View Page
+
+        // Update the data in the inventory
+        // Update the View Page with the updated data
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            {/* Render form fields with existing data */}
-            <button type="submit">Update Data</button>
-        </form>
+        <div>
+            <h1>Update Data Page</h1>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Name:
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </label>
+                <label>
+                    Quantity:
+                    <input
+                        type="number"
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                    />
+                </label>
+                <button type="submit">Update Data</button>
+            </form>
+        </div>
     );
 };
 
-export default UpdateDataForm;
+export default UpdateDataPage;
