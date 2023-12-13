@@ -13,9 +13,6 @@ export default function Home() {
         <UpdateDataPage />
         <DeleteDataPage item={{ name: 'Example', quantity: 10 }} />
       </div>
-      <div>
-
-      </div>
     </main>
   );
 }
