@@ -22,7 +22,7 @@ function Inventory() {
             // Add new item
             setUsers([...users, { name, qty, price, sum }]);
         }
-    
+
         users.push({ name, qty, price, sum });
         const total = users.reduce((total, user) => {
             total += Number(user.sum)
@@ -117,7 +117,7 @@ function Inventory() {
                                 <input type="text" value={sum} class="form-control" placeholder="Total" id="total_cost" name="total_cost" disabled />
                             </td>
                             <td>
-                                <button class="btn btn-success" type="submit" onClick={Calculation}>Add</button>
+                                <button type="submit" style={{ border: "1px solid #000", paddingLeft: "10px", paddingRight: "10px" }} onClick={Calculation}>Add</button>
                             </td>
                         </tr>
                     </table>
@@ -139,31 +139,32 @@ function Inventory() {
                                     <td style={{ border: "1px solid #000", padding: "10px" }}>{row.price}</td>
                                     <td style={{ border: "1px solid #000", padding: "10px" }}>{row.qty}</td>
                                     <td style={{ border: "1px solid #000", padding: "10px" }}>{row.sum}</td>
-                                    <button
-                                        class="btn btn-danger"
-                                        onClick={() => deleteItem(index)}
-                                    >
-                                        Delete
-                                    </button>
-                                <button
-                                    class="btn btn-warning"
-                                    onClick={() => editItem(index)}
-                                >
-                                    Edit
-                                </button>
+                                    <td style={{ border: "1px solid #000", padding: "10px" }} s>
+                                        <button
+                                            type="button"
+                                            style={{ padding: "10px" }}
+                                            onClick={() => deleteItem(index)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                    <td style={{ border: "1px solid #000", padding: "10px" }}>
+                                        <button
+                                            type="button"
+                                            style={{ padding: "10px" }}
+                                            onClick={() => editItem(index)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </td>
+
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-                <div class="col-sm-4">
-                    <div class="form-group" align="left">
-                        <br />
-                        <button type="button" class="btn btn-success" onClick={refreshPage}> <span>Complete</span> </button>
-                    </div>
-                </div>
             </div>
-        </div >
+        </div>
     );
 }
 
