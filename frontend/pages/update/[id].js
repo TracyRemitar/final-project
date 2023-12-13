@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 
-const UpdateDataPage = ({ item }) => {
+const UpdateDataPage = ({ item = { name: '', quantity: 0 } }) => {
     const [name, setName] = useState(item.name);
     const [quantity, setQuantity] = useState(item.quantity);
 
