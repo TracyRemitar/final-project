@@ -2,21 +2,15 @@
 import { useState } from "react";
 
 function Inventory() {
-
     const [price, setPrice] = useState(0);
     const [qty, setQty] = useState(0);
     const [total, setTotal] = useState(0);
-
     const [users, setUsers] = useState([]);
     const [name, setName] = useState();
-
     const [sum, setSum] = useState();
 
-
     function Calculation() {
-
         users.push({ name, qty, price, sum });
-
         const total = users.reduce((total, user) => {
             total += Number(user.sum)
             return total
@@ -29,11 +23,19 @@ function Inventory() {
         setPrice('');
         setSum('');
     }
+    // Delete Function
+    const deleteItem = (index) => {
+        const updatedUsers = [...users];
+        updatedUsers.splice(index, 1);
+        setUsers(updatedUsers);
 
-
-
-
-
+        // Recalculate total after deletion
+        const newTotal = updatedUsers.reduce((total, user) => {
+            total += Number(user.sum);
+            return total;
+        }, 0);
+        setTotal(newTotal);
+    };
     const handlePriceChange = (e) => {
         const newPrice = parseFloat(e.target.value);
         if (!isNaN(newPrice)) {
@@ -41,7 +43,6 @@ function Inventory() {
             calculateTotal(newPrice, qty);
         }
     };
-
     // Event handler for quantity selection
     const handleQuantityChange = (e) => {
         const newQuantity = parseInt(e.target.value);
@@ -50,31 +51,20 @@ function Inventory() {
             calculateTotal(price, newQuantity);
         }
     };
-
     // Calculate the total based on price and quantity
     const calculateTotal = (price, qty) => {
         const newTotal = price * qty;
         setSum(newTotal);
     };
-
     function refreshPage() {
         window.location.reload();
     }
-
-
     return (
         <div class="container-fluid bg-2 text-center">
-            <h1>Inventory Management System React</h1>
-            <br />
             <div class="row">
-
-
                 <div class="col-sm-8">
-
                     <table class="table table-bordered">
-                        <h3 align="left"> Add Products  </h3>
                         <tr>
-
                             <th>Product Name</th>
                             <th>Price</th>
                             <th>Qty</th>
@@ -82,16 +72,12 @@ function Inventory() {
                             <th>Option</th>
                         </tr>
                         <tr>
-
                             <td>
-
                                 <input type="text" class="form-control" placeholder="Item Name" value={name}
                                     onChange={(event) => {
                                         setName(event.target.value);
                                     }}
-
                                 />
-
                             </td>
                             <td>
                                 <input type="text" class="form-control" placeholder="Enter Price"
@@ -104,67 +90,52 @@ function Inventory() {
                                     value={qty}
                                     onChange={handleQuantityChange}
                                 />
-
                             </td>
                             <td>
-
-                                <input type="text" value={sum} class="form-control" placeholder="Enter Total" id="total_cost" name="total_cost" disabled />
+                                <input type="text" value={sum} class="form-control" placeholder="Total" id="total_cost" name="total_cost" disabled />
                             </td>
                             <td>
-
-
                                 <button class="btn btn-success" type="submit" onClick={Calculation}>Add</button>
                             </td>
                         </tr>
                     </table>
                     <h3 align="left">  Products  </h3>
                     <table class="table table-bordered">
-
                         <thead>
                             <tr>
-                                <th>Item Name</th>
-
-                                <th>Price</th>
-                                <th>Qty</th>
-                                <th>Amount</th>
+                                <th style={{ border: "1px solid #000", padding: "10px" }}>Item Name</th>
+                                <th style={{ border: "1px solid #000", padding: "10px" }}>Price</th>
+                                <th style={{ border: "1px solid #000", padding: "10px" }}>Qty</th>
+                                <th style={{ border: "1px solid #000", padding: "10px" }}>Amount</th>
 
                             </tr>
                         </thead>
-
                         <tbody>
                             {users.map((row, index) => (
                                 <tr key={index}>
-                                    <td>{row.name}</td>
-                                    <td>{row.price}</td>
-
-                                    <td>{row.qty}</td>
-                                    <td>{row.sum}</td>
-
+                                    <td style={{ border: "1px solid #000", padding: "10px" }}>{row.name}</td>
+                                    <td style={{ border: "1px solid #000", padding: "10px" }}>{row.price}</td>
+                                    <td style={{ border: "1px solid #000", padding: "10px" }}>{row.qty}</td>
+                                    <td style={{ border: "1px solid #000", padding: "10px" }}>{row.sum}</td>
+                                    <button
+                                        class="btn btn-danger"
+                                        onClick={() => deleteItem(index)}
+                                    >
+                                        Delete
+                                    </button>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-
                 <div class="col-sm-4">
-
                     <div class="form-group" align="left">
-                        <h3>Total</h3>
-
-                        <input type="text" class="form-control" placeholder="Enter Total" required disabled
-                            value={total} />
                         <br />
                         <button type="button" class="btn btn-success" onClick={refreshPage}> <span>Complete</span> </button>
-
                     </div>
                 </div>
-
             </div>
-
-
-
-        </div>
-
+        </div >
     );
 }
 
