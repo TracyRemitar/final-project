@@ -8,8 +8,21 @@ function Inventory() {
     const [users, setUsers] = useState([]);
     const [name, setName] = useState();
     const [sum, setSum] = useState();
+    const [editingIndex, setEditingIndex] = useState(null);
+
 
     function Calculation() {
+        if (editingIndex !== null) {
+            // Update existing item
+            const updatedUsers = [...users];
+            updatedUsers[editingIndex] = { name, qty, price, sum };
+            setUsers(updatedUsers);
+            setEditingIndex(null);
+        } else {
+            // Add new item
+            setUsers([...users, { name, qty, price, sum }]);
+        }
+    
         users.push({ name, qty, price, sum });
         const total = users.reduce((total, user) => {
             total += Number(user.sum)
@@ -23,6 +36,15 @@ function Inventory() {
         setPrice('');
         setSum('');
     }
+    //Edit function
+    const editItem = (index) => {
+        const itemToEdit = users[index];
+        setEditingIndex(index);
+        setName(itemToEdit.name);
+        setQty(itemToEdit.qty);
+        setPrice(itemToEdit.price);
+        setSum(itemToEdit.sum);
+    };
     // Delete Function
     const deleteItem = (index) => {
         const updatedUsers = [...users];
@@ -123,6 +145,12 @@ function Inventory() {
                                     >
                                         Delete
                                     </button>
+                                <button
+                                    class="btn btn-warning"
+                                    onClick={() => editItem(index)}
+                                >
+                                    Edit
+                                </button>
                                 </tr>
                             ))}
                         </tbody>
